@@ -13,10 +13,9 @@ class ScanController extends GetxController {
     _cameras = await availableCameras();
     _cameraController =
         CameraController(_cameras[0], ResolutionPreset.max);
-    _cameraController
-        .initialize()
-        .then((_) {})
-        .catchError((Object e) {
+    _cameraController.initialize().then((_) {
+      _isInitialized.value = true;
+    }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {
           case 'CameraAccessDenied':
@@ -35,4 +34,6 @@ class ScanController extends GetxController {
     _initCamera();
     super.onInit();
   }
+
+  void capture() {}
 }
